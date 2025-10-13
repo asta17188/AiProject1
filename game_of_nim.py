@@ -7,6 +7,11 @@ class GameOfNim(Game):
     a list with number of objects in each row."""
 
     def __init__(self, board=[3,1]):
+        moves = [(i, y)
+         for i, count in enumerate(board)
+         for y in range(1, count + 1)]
+        self.initial = GameState(to_move='MAX', utility=0, board=board, moves=moves)
+
         raise NotImplementedError
 
     def actions(self, state):
@@ -14,14 +19,29 @@ class GameOfNim(Game):
         return state.moves
 
     def result(self, state, move):
+        #subtracts amount from row
+        state.board[move[0]] -= move[1]
         raise NotImplementedError
 
     def utility(self, state, player):
         """Return the value to player; 1 for win, -1 for loss, 0 otherwise."""
+        if (self.terminal_test(state)):
+            if player == 'MAX':
+                return 1
+            else:
+                return -1
+        else:
+            return 0
         raise NotImplementedError
 
     def terminal_test(self, state):
         """A state is terminal if there are no objects left"""
+        for x in state.board:
+            #if a number other than zero is encountered game is not over
+            if x != 0:
+                return False
+        #no non zeroes were found game is over
+        return True
         raise NotImplementedError
 
     def display(self, state):
