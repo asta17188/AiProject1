@@ -1,3 +1,5 @@
+# Made by Anna Stafford and Jason Palomino
+
 from games import *
 
 class GameOfNim(Game):
@@ -26,11 +28,7 @@ class GameOfNim(Game):
         new_moves = [(i, y)
          for i, count in enumerate(state.board)
          for y in range(1, count + 1)]
-        other_player = ""
-        if other_player == 'MAX':
-            other_player = 'MIN'
-        else:
-            other_player = 'MAX'
+        other_player = 'MIN' if state.to_move == 'MAX' else 'MAX' # The next player is min if the previous player was max, otherwise its max's turn
         return GameState(to_move=other_player, utility=state.utility, board=new_board, moves=new_moves)
 
     def utility(self, state, player):
