@@ -23,7 +23,7 @@ class GameOfNim(Game):
         if self.terminal_test(state): # Test to see if we are at the end of the game
             return state
         #subtracts amount from row
-        new_board = state.board
+        new_board = state.board.copy()
         new_board[move[0]] -= move[1]
         new_moves = [(i, y)
          for i, count in enumerate(state.board)
